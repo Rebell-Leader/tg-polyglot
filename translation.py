@@ -122,7 +122,7 @@ def process_video(video_url, languages, output_type):
 
             # Download the original video
             downloaded_video = TEMP_DIR / f"{uuid.uuid4().hex}_original.mp4"
-            download_command = ["./yt-dlp", "-o", str(downloaded_video), video_url]
+            download_command = ["yt-dlp", "-o", str(downloaded_video), video_url]
             download_result = subprocess.run(download_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
             if download_result.returncode != 0:
