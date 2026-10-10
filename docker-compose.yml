@@ -1,0 +1,30 @@
+services:
+  bot:
+    build: .
+    image: tg-polyglot
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ./data:/data   # database, yt-dlp cache, temp files; survives rebuilds
+    # A Pi 3 has 1 GB. Measured peak is ~250 MB with one job (~350 MB in the rare case YouTube needs its
+    # JS challenge solved); the cap keeps a runaway job from starving the OS. With zram/swap on the host,
+    # memswap_limit lets the container use some of it instead of being OOM-killed.
+    mem_limit: 700m
+    memswap_limit: 1g
+    # Time to tell users their job will resume, and to stop ffmpeg/yt-dlp cleanly
+    stop_grace_period: 30s
+    logging:
+      driver: json-file
+      options: { max-size: "5m", max-file: "2" }   # don't wear out the SD card with logs
+
+  # Optional: a local Bot API server raises the upload limit from 50 MB to 2000 MB.
+  # Get api_id/api_hash at https://my.telegram.org, then set TELEGRAM_API_SERVER=http://telegram-bot-api:8081
+  # telegram-bot-api:
+  #   image: aiogram/telegram-bot-api:latest
+  #   restart: unless-stopped
+  #   environment:
+  #     TELEGRAM_API_ID: "123456"
+  #     TELEGRAM_API_HASH: "abcdef..."
+  #     TELEGRAM_LOCAL: "1"
+  #   volumes:
+  #     - ./data/bot-api:/var/lib/telegram-bot-api

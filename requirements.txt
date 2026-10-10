@@ -1,1 +1,7 @@
-aiogram>=3.0
+# Runtime dependencies (the Docker image installs exactly these). Lower bounds = versions tested together.
+aiogram>=3.31,<4          # Telegram; brings aiohttp, which polyglot also uses directly
+aiohttp>=3.10
+edge-tts>=7.2.8,<8        # Microsoft neural voices (unofficial API)
+gTTS>=2.5.4,<3            # Google TTS fallback
+# Updated at runtime when YTDLP_AUTO_UPDATE=1; [default] includes yt-dlp-ejs (YouTube JS challenges)
+yt-dlp[default]>=2026.8.19
