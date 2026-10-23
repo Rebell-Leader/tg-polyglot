@@ -8,7 +8,7 @@ Send a link, then pick one of three outputs:
 - 🎧 **Audio** only, podcast-style.
 - 📝 **Text**: a translated transcript (`.txt` + `.srt`).
 
-It is built for a **Raspberry Pi 3B with 1 GB RAM**, running in Docker:
+It is built for a **Raspberry Pi 3B with 1 GB RAM**, running in Docker, and is tested on one:
 
 - Translation and speech run on remote services, and video is never re-encoded.
 - One job runs at a time. Jobs survive restarts and power cuts.
@@ -125,8 +125,8 @@ libraries; the custom build is a 6 MB binary.
 
 | Command | What it does |
 |---|---|
-| `/start` | How to use the bot |
-| `/settings` | Source and target languages |
+| `/start`, `/help` | How to use the bot |
+| `/settings` (`/lang`) | Source and target languages |
 | `/cancel` | Cancel your current job |
 | `/stats` | Your usage; admins also see global stats and the queue |
 | `/grant <id>`, `/revoke <id>` | Admins only: premium (no daily limit) |
@@ -147,6 +147,6 @@ RUN_NETWORK_TESTS=1 .venv/bin/python -m pytest tests  # + end-to-end bot flow (r
 Code map:
 
 - `polyglot/pipeline.py`: one job, engines and fallbacks.
-- `media.py`: yt-dlp, ffmpeg, format choice.
-- `bot.py`: Telegram UI, the queue runner, delivery.
+- `polyglot/media.py`: yt-dlp, ffmpeg, format choice.
+- `polyglot/bot.py`: Telegram UI, the queue runner, delivery.
 - `vot/vot_worker.mjs`: the Yandex client.
