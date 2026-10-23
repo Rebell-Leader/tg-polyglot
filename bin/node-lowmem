@@ -1,0 +1,4 @@
+#!/bin/sh
+# Node for yt-dlp's YouTube JS challenge solver, with a capped heap: the solver peaks at ~260 MB by default,
+# ~215 MB like this; below ~120 MB of heap it fails. Matters on a 1 GB Raspberry Pi.
+exec node --max-semi-space-size=1 --max-old-space-size=192 "$@"
